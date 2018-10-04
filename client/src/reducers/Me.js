@@ -2,10 +2,10 @@ import { merge } from '../utils'
 import { RECEIVE_ME } from '../actions/Constants'
 
 export function me(
-  state={},
+  state = {},
   action
 ) {
-  switch(action.type) {
+  switch (action.type) {
     case RECEIVE_ME:
       return merge(state, action.me)
     default:
