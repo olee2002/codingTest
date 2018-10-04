@@ -3,6 +3,6 @@ class Api::EmployeesController < Api::BaseController
 
   def index
     @employee = Employee.all
-    render json: "test"
+    render json: @employee
   end
 end
