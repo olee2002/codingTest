@@ -6,3 +6,9 @@ export function receiveMe(me) {
     me
   }
 }
+export function getEmployees(employees) {
+  return {
+    type: actions.GET_EMPLOYEES,
+    employees
+  }
+}

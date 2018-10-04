@@ -9,3 +9,11 @@ export function fetchMe() {
       then(me => dispatch(actions.receiveMe(me)));
   }
 }
+
+export function getEmployees() {
+  return dispatch => {
+    return fetch('/api/employees')
+      .then(response => response.json())
+      .then(employees => dispatch(actions.receiveMe(employees)));
+  }
+}

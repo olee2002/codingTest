@@ -7,7 +7,7 @@ import EmployeeList from './EmployeeList'
 
 const Page = styled.div`
   display: grid;
-  grid-template 46px 1fr / 1fr;
+  grid-template: 46px 1fr / 1fr;
   height: 100%;
   width: 100%;
 `;
