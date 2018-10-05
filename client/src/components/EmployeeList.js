@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { getEmployees } from '../actions/AsyncActions'
 
 import EmployeesTable from './EmployeesTable'
+import LetterFrequency from './LetterFrequency'
 
 const Container = styled.div`
 display: flex;
@@ -47,7 +48,7 @@ class EmployeeList extends Component {
         for (let i = 0; i < allLetters.length; i++) {
             for (let j = 0; j < chars.length; j++) {
                 if (allLetters[i].letter === chars[j]) {
-                    allLetters[i].count++
+                    j < chars.length ? allLetters[i].count++ : null
                 }
             }
         }
@@ -59,6 +60,7 @@ class EmployeeList extends Component {
 
     render() {
         const { employees, clicked } = this.state
+        const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
         employees.map(e => this.handleFrequency(e.email_address))
         return (
             <Container>
@@ -68,7 +70,9 @@ class EmployeeList extends Component {
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
                     <button>Duplicate Emails</button>
                 </div>
-                <EmployeesTable employees={employees} />
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}
+                </div>
             </Container>
         )
     }
