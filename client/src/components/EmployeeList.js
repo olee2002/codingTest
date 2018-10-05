@@ -21,13 +21,15 @@ td, th {
     padding: 8px;
 }
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #e9e9e9;
 }
 button{
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 35px;
     background: none;
     cursor: pointer;
+    font-size: 15px;
+    margin: 5px;
 }
 `
 
@@ -53,7 +55,10 @@ class EmployeeList extends Component {
             <Container>
 
                 <h1>SalesLoft Employee List</h1>
-
+                <div>
+                    <button>Email Letter Frequency</button>
+                    <button>Duplicate Emails</button>
+                </div>
                 <table>
                     <tr>
                         <th>ID</th>

@@ -30,7 +30,7 @@ const Badge = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 7px;
-  border 2px solid #4a90e2;
+  border: 2px solid #4a90e2;
   justify-content: center;
   font-size: 25px;
   font-weight: bold;
