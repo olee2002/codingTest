@@ -39,10 +39,11 @@ class EmployeeList extends Component {
     }
 
     componentDidMount() {
+        const { employees } = this.state
         this.props.getEmployees()
             .then((res) => this.setState({ employees: res.employees }, () => {
                 //this needs to stay here to get loaded only once
-                this.state.employees.map(e => this.handleFrequency(e.email_address))
+                employees.map(e => this.handleFrequency(e.email_address))
             }))
 
     }
@@ -62,21 +63,30 @@ class EmployeeList extends Component {
         this.setState({ clicked: !this.state.clicked })
     }
 
-    handleDuplicate() {
-        checkMatch('babylee1@hotmail.com', 'olee@gmail.com')
-        console.log('babylee1@hotmail.com', 'olee@gmail.com')
-        function checkMatch(emailToCheck, email) {
-            const e1 = emailToCheck.split('')
-            const e2 = email.split('')
-            const length = e1.length > e2.length ? e1.length : e2.length
-            let count = 0
-            for (let i = 0; i < length; i++) {
-                if (emailToCheck.includes(e2[i])) count++;
-            }
-            const percentage = Math.floor((count / length * 100), 100)
-            console.log(percentage)
-        }
+    handleDuplicate(employees) {
+        const match = []
+        employees.map(e => checkMatch(employees, e.email_address))
 
+        //match testing function
+        function checkMatch(employees, email) {
+            employees.map(e => {
+                const e1 = e.email_address.split('')
+                const e2 = email.split('')
+                const length = e1.length > e2.length ? e1.length : e2.length
+
+                let countMatch = 0
+                let positionMatch = 0
+                for (let i = 0; i < length; i++) {
+                    if (e.email_address.includes(e2[i])) countMatch++;
+                    if (e1[i] === e2[i]) positionMatch++;
+                }
+                const percentageCount = Math.floor((countMatch / length * 100), 100)
+                const percentagePosition = Math.floor((positionMatch / length * 100), 100)
+                match.push({ email: e.email_address, emailToCompare: email, countMatch: percentageCount, positionMatch: percentagePosition })
+                return match
+            })
+        }
+        console.log(match.filter(e => e.countMatch !== 100 && e.countMatch > 94))
     }
 
     render() {
@@ -89,7 +99,7 @@ class EmployeeList extends Component {
                 <h1>SalesLoft Employee List</h1>
                 <div>
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
-                    <button onClick={this.handleDuplicate.bind(this)}>Duplicate Emails</button>
+                    <button onClick={() => this.handleDuplicate(employees)}>Duplicate Emails</button>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}
