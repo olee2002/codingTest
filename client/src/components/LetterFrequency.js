@@ -22,7 +22,7 @@ tr:nth-child(even) {
 const LetterFrequency = (props) => {
     return (
         <SubContainer>
-            <table>
+            <table style={{ marginLeft: 10 }}>
                 <tr>
                     <th>Character</th>
                     <th>Count</th>

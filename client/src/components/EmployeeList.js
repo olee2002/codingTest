@@ -41,6 +41,7 @@ class EmployeeList extends Component {
     componentDidMount() {
         this.props.getEmployees()
             .then((res) => this.setState({ employees: res.employees }, () => {
+                //this needs to stay here to get loaded only once
                 this.state.employees.map(e => this.handleFrequency(e.email_address))
             }))
 
