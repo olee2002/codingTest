@@ -22,7 +22,7 @@ export const LandingPage = () => (
   <Page>
     <ConnectedNavBar />
     <FlexBox>
-      <Intro />
+      {/* <Intro /> */}
     </FlexBox>
     <EmployeeList />
   </Page>
