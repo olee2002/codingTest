@@ -56,6 +56,7 @@ class EmployeeList extends Component {
 
                 <table>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Title</th>
                         <th>Email</th>
@@ -63,6 +64,7 @@ class EmployeeList extends Component {
                     </tr>
                     {employees.map(e =>
                         < tr >
+                            <td>{e.id}</td>
                             <td>{e.first_name} {e.last_name}</td>
                             <td>{e.title}</td>
                             <td>{e.email_address}</td>
