@@ -23,7 +23,7 @@ button{
 `
 const allLetters = [];
 for (var i = 65; i < 91; i++) {
-    allLetters.add({ letter: String.fromCharCode(i), count: 0 });
+    allLetters.push({ letter: String.fromCharCode(i), count: 0 });
 };
 
 
@@ -32,7 +32,8 @@ class EmployeeList extends Component {
     constructor() {
         super()
         this.state = {
-            employees: []
+            employees: [],
+            clicked: false
         }
     }
 
@@ -41,16 +42,24 @@ class EmployeeList extends Component {
             .then((res) => this.setState({ employees: res.employees }))
     }
 
-    handleFrequency() {
-
+    handleFrequency(email) {
+        const chars = email.toUpperCase().match(/[A-Z]/g)
+        for (let i = 0; i < allLetters.length; i++) {
+            for (let j = 0; j < chars.length; j++) {
+                if (allLetters[i].letter === chars[j]) {
+                    allLetters[i].count++
+                }
+            }
+        }
     }
 
     handleClick() {
-
+        this.setState({ clicked: !this.state.clicked })
     }
 
     render() {
-        const { employees } = this.state
+        const { employees, clicked } = this.state
+        employees.map(e => this.handleFrequency(e.email_address))
         return (
             <Container>
 

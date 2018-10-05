@@ -33,7 +33,7 @@ const EmployeesTable = (props) => {
                     <th>Notes</th>
                 </tr>
                 {props.employees.map(e =>
-                    < tr >
+                    < tr key={e.id} >
                         <td>{e.id}</td>
                         <td>{e.first_name} {e.last_name}</td>
                         <td>{e.title}</td>
