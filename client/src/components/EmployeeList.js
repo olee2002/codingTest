@@ -21,6 +21,11 @@ button{
     margin: 5px;
 }
 `
+const allLetters = [];
+for (var i = 65; i < 91; i++) {
+    allLetters.add({ letter: String.fromCharCode(i), count: 0 });
+};
+
 
 class EmployeeList extends Component {
 
@@ -36,15 +41,22 @@ class EmployeeList extends Component {
             .then((res) => this.setState({ employees: res.employees }))
     }
 
+    handleFrequency() {
+
+    }
+
+    handleClick() {
+
+    }
+
     render() {
         const { employees } = this.state
-        console.log(employees)
         return (
             <Container>
 
                 <h1>SalesLoft Employee List</h1>
                 <div>
-                    <button>Email Letter Frequency</button>
+                    <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
                     <button>Duplicate Emails</button>
                 </div>
                 <EmployeesTable employees={employees} />
