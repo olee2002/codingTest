@@ -7,6 +7,6 @@ class Api::EmployeesController < Api::BaseController
   end
 
   def find_duplicates
-    Employee.where("email_address LIKE ?", "%#{params[:email_address]}%")
+    render json: "test"
   end
 end

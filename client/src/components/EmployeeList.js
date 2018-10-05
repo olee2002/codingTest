@@ -62,6 +62,10 @@ class EmployeeList extends Component {
         this.setState({ clicked: !this.state.clicked })
     }
 
+    handleDuplicate() {
+        
+    }
+
     render() {
         const { employees, clicked } = this.state
         const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
