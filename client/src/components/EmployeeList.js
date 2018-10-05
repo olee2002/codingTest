@@ -40,7 +40,10 @@ class EmployeeList extends Component {
 
     componentDidMount() {
         this.props.getEmployees()
-            .then((res) => this.setState({ employees: res.employees }))
+            .then((res) => this.setState({ employees: res.employees }, () => {
+                this.state.employees.map(e => this.handleFrequency(e.email_address))
+            }))
+
     }
 
     handleFrequency(email) {
@@ -61,7 +64,7 @@ class EmployeeList extends Component {
     render() {
         const { employees, clicked } = this.state
         const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
-        employees.map(e => this.handleFrequency(e.email_address))
+
         return (
             <Container>
 
