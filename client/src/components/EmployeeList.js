@@ -63,7 +63,20 @@ class EmployeeList extends Component {
     }
 
     handleDuplicate() {
-        
+        checkMatch('babylee1@hotmail.com', 'olee@gmail.com')
+        console.log('babylee1@hotmail.com', 'olee@gmail.com')
+        function checkMatch(emailToCheck, email) {
+            const e1 = emailToCheck.split('')
+            const e2 = email.split('')
+            const length = e1.length > e2.length ? e1.length : e2.length
+            let count = 0
+            for (let i = 0; i < length; i++) {
+                if (emailToCheck.includes(e2[i])) count++;
+            }
+            const percentage = Math.floor((count / length * 100), 100)
+            console.log(percentage)
+        }
+
     }
 
     render() {
@@ -76,7 +89,7 @@ class EmployeeList extends Component {
                 <h1>SalesLoft Employee List</h1>
                 <div>
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
-                    <button>Duplicate Emails</button>
+                    <button onClick={this.handleDuplicate.bind(this)}>Duplicate Emails</button>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}
