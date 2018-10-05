@@ -14,6 +14,6 @@ export function getEmployees() {
   return dispatch => {
     return fetch('/api/employees')
       .then(response => response.json())
-      .then(employees => dispatch(actions.receiveMe(employees)));
+      .then(employees => dispatch(actions.getEmployees(employees)));
   }
 }
