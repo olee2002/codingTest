@@ -34,16 +34,18 @@ class EmployeeList extends Component {
         super()
         this.state = {
             employees: [],
-            clicked: false
+            clicked: false,
+            duplicateClicked: false,
+            duplicate: [],
         }
     }
 
     componentDidMount() {
-        const { employees } = this.state
+
         this.props.getEmployees()
             .then((res) => this.setState({ employees: res.employees }, () => {
                 //this needs to stay here to get loaded only once
-                employees.map(e => this.handleFrequency(e.email_address))
+                this.state.employees.map(e => this.handleFrequency(e.email_address))
             }))
 
     }
@@ -63,36 +65,36 @@ class EmployeeList extends Component {
         this.setState({ clicked: !this.state.clicked })
     }
 
-    handleDuplicate(employees) {
-        const match = []
-        employees.map(e => checkMatch(employees, e.email_address))
+    // handleDuplicate(employees) {
+    //     const match = []
+    //     employees.map(e => checkMatch(employees, e.email_address))
+    //     const finalMatch = match.filter(e => e.countMatch !== 100 && e.countMatch > 94 && e.positionMatch > 50)
 
-        //match testing function
-        function checkMatch(employees, email) {
-            employees.map(e => {
-                const e1 = e.email_address.split('')
-                const e2 = email.split('')
-                const length = e1.length > e2.length ? e1.length : e2.length
+    //     //match testing function
+    //     function checkMatch(employees, email) {
+    //         employees.map(e => {
+    //             const e1 = e.email_address.split('')
+    //             const e2 = email.split('')
+    //             const length = e1.length > e2.length ? e1.length : e2.length
 
-                let countMatch = 0
-                let positionMatch = 0
-                for (let i = 0; i < length; i++) {
-                    if (e.email_address.includes(e2[i])) countMatch++;
-                    if (e1[i] === e2[i]) positionMatch++;
-                }
-                const percentageCount = Math.floor((countMatch / length * 100), 100)
-                const percentagePosition = Math.floor((positionMatch / length * 100), 100)
-                match.push({ email: e.email_address, emailToCompare: email, countMatch: percentageCount, positionMatch: percentagePosition })
-                return match
-            })
-        }
-        console.log(match.filter(e => e.countMatch !== 100 && e.countMatch > 94))
-    }
+    //             let countMatch = 0
+    //             let positionMatch = 0
+    //             for (let i = 0; i < length; i++) {
+    //                 if (e.email_address.includes(e2[i])) countMatch++;
+    //                 if (e1[i] === e2[i]) positionMatch++;
+    //             }
+    //             const percentageCount = Math.floor((countMatch / length * 100), 100)
+    //             const percentagePosition = Math.floor((positionMatch / length * 100), 100)
+    //             match.push({ email: e.email_address, emailToCompare: email, countMatch: percentageCount, positionMatch: percentagePosition })
+    //         })
+    //     }
+    //     this.setState({ duplicate: finalMatch, duplicateClicked: !this.state.duplicateClicked })
+    // }
 
     render() {
-        const { employees, clicked } = this.state
+        const { employees, clicked, duplicateClicked, duplicate } = this.state
         const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
-
+        console.log(letterFrequency, allLetters)
         return (
             <Container>
 
@@ -100,6 +102,7 @@ class EmployeeList extends Component {
                 <div>
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
                     <button onClick={() => this.handleDuplicate(employees)}>Duplicate Emails</button>
+                    <div>{duplicateClicked ? duplicate : 'No duplicate email copy found!'} </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}

@@ -1,7 +1,7 @@
 class Employee < ApplicationRecord
   API_BASE_URL = "https://api.salesloft.com/v2"
   #control the number of data
-  PAGE_SIZE = "50"
+  PAGE_SIZE = "100"
   URL = "#{API_BASE_URL}/people?per_page=#{PAGE_SIZE}"
   HEADERS = {"Authorization" => "Bearer #{ENV.fetch("SALESLOFT_API_KEY")}"}
 
