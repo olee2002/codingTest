@@ -15,7 +15,7 @@ align-items: center;
 flex-direction: column;
 margin: 20px;
 button{
-    width: 200px;
+    width: 300px;
     height: 35px;
     background: none;
     cursor: pointer;
@@ -31,7 +31,7 @@ class EmployeeList extends Component {
         this.state = {
             employees: [],
             clicked: false,
-            duplicateClicked: false,
+            duplicateButtonClicked: false,
             duplicate: [],
             fetching: false,
             charsArr: []
@@ -70,22 +70,23 @@ class EmployeeList extends Component {
 
         this.setState({
             duplicate: finalMatch,
-            duplicateClicked: !this.state.duplicateClicked,
+            duplicateButtonClicked: !this.state.duplicateButtonClicked,
             fetching: true
         })
     }
 
     render() {
-        const { employees, clicked, duplicateClicked, duplicate, charsArr } = this.state
-
+        const { employees, clicked, duplicateButtonClicked, duplicate, charsArr } = this.state
+        const buttonLetters = clicked ? 'Close Email Letter Frequency' : 'View Email Letter Frequency'
+        const buttonDuplicates = duplicateButtonClicked ? 'Close Potential Duplicate Emails' : 'View Potential Duplicate Emails'
 
         return (
             <Container>
                 <h1>SalesLoft Employee List</h1>
                 <div>
-                    <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
-                    <button onClick={() => this.handleDuplicate(employees)}>Potential Duplicate Emails</button>
-                    <div>{duplicateClicked ?
+                    <button onClick={this.handleClick.bind(this)}>{buttonLetters}</button>
+                    <button onClick={() => this.handleDuplicate(employees)}>{buttonDuplicates}</button>
+                    <div>{duplicateButtonClicked ?
                         (duplicate.length ?
                             <div>{duplicate.map((e, i) =>
                                 <div key={i}>
