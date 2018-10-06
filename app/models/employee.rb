@@ -1,4 +1,6 @@
 class Employee < ApplicationRecord
+  validates_uniqueness_of :id
+
   API_BASE_URL = "https://api.salesloft.com/v2"
   #control the number of data
   PAGE_SIZE = "50"
@@ -16,10 +18,10 @@ class Employee < ApplicationRecord
   employee = Employee.new
   employee.get_api_data.each do |record|
     Employee.create do |person|
-      !person.first_name ? person.first_name = record["first_name"] : Nil
-      !person.last_name ? person.last_name = record["last_name"] : Nil
-      !person.email_address ? person.email_address = record["email_address"] : Nil
-      !person.title ? person.title = record["title"] : Nil
+      person.first_name = record["first_name"]
+      person.last_name = record["last_name"]
+      person.email_address = record["email_address"]
+      person.title = record["title"]
     end
   end
 end
