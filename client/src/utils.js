@@ -31,13 +31,17 @@ export function checkMatch(array, string, name, set) {
         }
     })
 }
-
-export function countLetters(array, characterArray) {
-    for (let i = 0; i < array.length; i++) {
-        for (let j = 0; j < characterArray.length; j++) {
-            if (array[i].letter === characterArray[j]) {
-                j < characterArray.length ? array[i].count++ : null
+const allLetters = [];
+for (var i = 65; i < 91; i++) {
+    allLetters.push({ letter: String.fromCharCode(i), count: 0 });
+};
+export function countLetters(stringArr) {
+    for (let i = 0; i < allLetters.length; i++) {
+        for (let j = 0; j < stringArr.length; j++) {
+            if (allLetters[i].letter === stringArr[j]) {
+                j < stringArr.length ? allLetters[i].count++ : null
             }
         }
     }
+    return allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
 }

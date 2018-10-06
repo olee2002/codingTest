@@ -23,11 +23,6 @@ button{
     margin: 5px;
 }
 `
-const allLetters = [];
-for (var i = 65; i < 91; i++) {
-    allLetters.push({ letter: String.fromCharCode(i), count: 0 });
-};
-
 
 class EmployeeList extends Component {
 
@@ -38,7 +33,8 @@ class EmployeeList extends Component {
             clicked: false,
             duplicateClicked: false,
             duplicate: [],
-            fetching: false
+            fetching: false,
+            charsArr: []
         }
     }
 
@@ -55,7 +51,7 @@ class EmployeeList extends Component {
     handleFrequency(email) {
         const chars = email.toUpperCase().match(/[A-Z]/g)
         //"countLetters" function from utils
-        countLetters(allLetters, chars)
+        this.setState({ charsArr: countLetters(chars) })
     }
 
     handleClick() {
@@ -80,8 +76,8 @@ class EmployeeList extends Component {
     }
 
     render() {
-        const { employees, clicked, duplicateClicked, duplicate, fetching } = this.state
-        const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
+        const { employees, clicked, duplicateClicked, duplicate, charsArr } = this.state
+
 
         return (
             <Container>
@@ -90,25 +86,23 @@ class EmployeeList extends Component {
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
                     <button onClick={() => this.handleDuplicate(employees)}>Potential Duplicate Emails</button>
                     <div>{duplicateClicked ?
-                        (fetching ?
-                            (duplicate.length ?
-                                <div>{duplicate.map((e, i) =>
-                                    <div key={i}>
-                                        <hr />
-                                        <div>A.Email:{e.string}</div>
-                                        <div>B.Email To Compare:{e.stringToCompare}</div>
-                                        <div>A.List:{e.string.split('').sort()}</div>
-                                        <div>B.List:{e.stringToCompare.split('').sort()}</div>
-                                        <div>Count Match:{e.countMatch}% | Position Match:{e.positionMatch}%</div>
-                                    </div>)}
-                                </div>
-                                : <div>No duplicate email copy found!</div>)
-                            : 'Analyzing data!')
+                        (duplicate.length ?
+                            <div>{duplicate.map((e, i) =>
+                                <div key={i}>
+                                    <hr />
+                                    <div>A.Email:{e.string}</div>
+                                    <div>B.Email To Compare:{e.stringToCompare}</div>
+                                    <div>A.List:{e.string.split('').sort()}</div>
+                                    <div>B.List:{e.stringToCompare.split('').sort()}</div>
+                                    <div>Count Match:{e.countMatch}% | Position Match:{e.positionMatch}%</div>
+                                </div>)}
+                            </div>
+                            : <div>No duplicate email copy found!</div>)
                         : null}
                     </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}
+                    <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={charsArr} /> : null}
                 </div>
             </Container>
         )
