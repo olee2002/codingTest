@@ -68,7 +68,7 @@ class EmployeeList extends Component {
         //"checkMatch" function from utils
         employees.map(e => checkMatch(employees, e[attrName], attrName, set))
         const finalMatch = [...set].filter(e => {
-            if (e.countMatch !== 100 && e.positionMatch !== 100) return e.countMatch >= 95 && e.positionMatch > 10;
+            if (e.countMatch !== 100 && e.positionMatch !== 100) return e.countMatch >= 95 && e.positionMatch > 35;
 
         })
 
