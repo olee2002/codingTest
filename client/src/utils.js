@@ -1,4 +1,5 @@
 export const merge = (...obj) => Object.assign({}, ...obj);
+
 export function checkMatch(employees, email2, set) {
     employees.map(e => {
         const e1 = e.email_address.split('')
@@ -13,4 +14,14 @@ export function checkMatch(employees, email2, set) {
         const percentagePosition = Math.floor((positionMatch / e1.length * 100), 100)
         set.add({ email: e.email_address, emailToCompare: email2, countMatch: percentageCount, positionMatch: percentagePosition })
     })
+}
+
+export function countLetters(allLetters, chars) {
+    for (let i = 0; i < allLetters.length; i++) {
+        for (let j = 0; j < chars.length; j++) {
+            if (allLetters[i].letter === chars[j]) {
+                j < chars.length ? allLetters[i].count++ : null
+            }
+        }
+    }
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { getEmployees } from '../actions/AsyncActions'
-import { checkMatch } from '../utils'
+import { checkMatch, countLetters } from '../utils'
 
 import EmployeesTable from './EmployeesTable'
 import LetterFrequency from './LetterFrequency'
@@ -54,13 +54,8 @@ class EmployeeList extends Component {
 
     handleFrequency(email) {
         const chars = email.toUpperCase().match(/[A-Z]/g)
-        for (let i = 0; i < allLetters.length; i++) {
-            for (let j = 0; j < chars.length; j++) {
-                if (allLetters[i].letter === chars[j]) {
-                    j < chars.length ? allLetters[i].count++ : null
-                }
-            }
-        }
+        //"countLetters" function from utils
+        countLetters(allLetters, chars)
     }
 
     handleClick() {
@@ -69,13 +64,18 @@ class EmployeeList extends Component {
 
     handleDuplicate(employees) {
         const set = new Set()
+        //"checkMatch" function from utils
         employees.map(e => checkMatch(employees, e.email_address, set))
         const finalMatch = [...set].filter(e => {
             if (e.countMatch !== 100) return e.countMatch >= 95;
 
         })
 
-        this.setState({ duplicate: finalMatch, duplicateClicked: !this.state.duplicateClicked, fetching: true })
+        this.setState({
+            duplicate: finalMatch,
+            duplicateClicked: !this.state.duplicateClicked,
+            fetching: true
+        })
     }
 
     render() {
