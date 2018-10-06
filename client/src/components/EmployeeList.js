@@ -37,6 +37,7 @@ class EmployeeList extends Component {
             clicked: false,
             duplicateClicked: false,
             duplicate: [],
+            fetching: false
         }
     }
 
@@ -66,33 +67,35 @@ class EmployeeList extends Component {
     }
 
     handleDuplicate(employees) {
-        const match = []
+        const set = new Set()
         employees.map(e => checkMatch(employees, e.email_address))
-        const finalMatch = match.filter(e => e.countMatch !== 100 && e.countMatch > 95)
 
         //match testing function
-        function checkMatch(employees, email) {
+        function checkMatch(employees, email2) {
             employees.map(e => {
                 const e1 = e.email_address.split('')
-                const e2 = email.split('')
-                const length = e1.length > e2.length ? e1.length : e2.length
-
+                const e2 = email2.split('')
                 let countMatch = 0
                 let positionMatch = 0
-                for (let i = 0; i < length; i++) {
+                for (let i = 0; i < e1.length; i++) {
                     if (e.email_address.includes(e2[i])) countMatch++;
                     if (e1[i] === e2[i]) positionMatch++;
                 }
-                const percentageCount = Math.floor((countMatch / length * 100), 100)
-                const percentagePosition = Math.floor((positionMatch / length * 100), 100)
-                match.push({ email: e.email_address, emailToCompare: email, countMatch: percentageCount, positionMatch: percentagePosition })
+                const percentageCount = Math.floor((countMatch / e1.length * 100), 100)
+                const percentagePosition = Math.floor((positionMatch / e1.length * 100), 100)
+                set.add({ email: e.email_address, emailToCompare: email2, countMatch: percentageCount, positionMatch: percentagePosition })
             })
         }
-        this.setState({ duplicate: finalMatch, duplicateClicked: !this.state.duplicateClicked })
+        const finalMatch = [...set].filter(e => {
+            if (e.countMatch !== 100) return e.countMatch > 95;
+
+        })
+        console.log('test', finalMatch)
+        this.setState({ duplicate: finalMatch, duplicateClicked: !this.state.duplicateClicked, fetching: true })
     }
 
     render() {
-        const { employees, clicked, duplicateClicked, duplicate } = this.state
+        const { employees, clicked, duplicateClicked, duplicate, fetching } = this.state
         const letterFrequency = allLetters.filter(l => l.count !== 0).sort((a, b) => b.count - a.count)
 
         return (
@@ -101,14 +104,25 @@ class EmployeeList extends Component {
                 <h1>SalesLoft Employee List</h1>
                 <div>
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
-                    <button onClick={() => this.handleDuplicate(employees)}>Duplicate Emails</button>
-                    <div>{duplicateClicked ? (duplicate.length ?
-                        <div>{duplicate.map(e => <div>
-                            <div>Email:{e.email}</div>
-                            <div>Email To Compare:{e.emailToCompare}</div>
-                            <div>Count Match: {e.countMatch} %</div>
-                            <div>Position Match: {e.positionMatch}%</div>
-                        </div>)}</div> : <div>No duplicate email copy found!</div>) : null} </div>
+                    <button onClick={() => this.handleDuplicate(employees)}>Potential Duplicate Emails</button>
+                    <div>{duplicateClicked ?
+                        (fetching ?
+                            (duplicate.length ?
+                                <div>{duplicate.map(e =>
+                                    <div key={e.email}>
+                                        <div>A.Email:{e.email}</div>
+                                        <div>B.Email To Compare:{e.emailToCompare}</div>
+                                        <div>A.List:{e.email.split('').sort()}</div>
+                                        <div>B.List:{e.emailToCompare.split('').sort()}</div>
+                                        <div>Count Match:{e.countMatch}%</div>
+                                        <div>Position Match:{e.positionMatch}%</div>
+                                        <hr />
+                                    </div>)}
+                                </div>
+                                : <div>No duplicate email copy found!</div>)
+                            : 'Analyzing data!')
+                        : null}
+                    </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={letterFrequency} /> : null}
