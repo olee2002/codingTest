@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { getEmployees } from '../actions/AsyncActions'
+import { checkMatch } from '../utils'
 
 import EmployeesTable from './EmployeesTable'
 import LetterFrequency from './LetterFrequency'
@@ -68,26 +69,9 @@ class EmployeeList extends Component {
 
     handleDuplicate(employees) {
         const set = new Set()
-        employees.map(e => checkMatch(employees, e.email_address))
-
-        //match testing function
-        function checkMatch(employees, email2) {
-            employees.map(e => {
-                const e1 = e.email_address.split('')
-                const e2 = email2.split('')
-                let countMatch = 0
-                let positionMatch = 0
-                for (let i = 0; i < e1.length; i++) {
-                    if (e.email_address.includes(e2[i])) countMatch++;
-                    if (e1[i] === e2[i]) positionMatch++;
-                }
-                const percentageCount = Math.floor((countMatch / e1.length * 100), 100)
-                const percentagePosition = Math.floor((positionMatch / e1.length * 100), 100)
-                set.add({ email: e.email_address, emailToCompare: email2, countMatch: percentageCount, positionMatch: percentagePosition })
-            })
-        }
+        employees.map(e => checkMatch(employees, e.email_address, set))
         const finalMatch = [...set].filter(e => {
-            if (e.countMatch !== 100) return e.countMatch > 90;
+            if (e.countMatch !== 100) return e.countMatch >= 95;
 
         })
 
@@ -109,13 +93,12 @@ class EmployeeList extends Component {
                             (duplicate.length ?
                                 <div>{duplicate.map(e =>
                                     <div key={e.email}>
+                                        <hr />
                                         <div>A.Email:{e.email}</div>
                                         <div>B.Email To Compare:{e.emailToCompare}</div>
                                         <div>A.List:{e.email.split('').sort()}</div>
                                         <div>B.List:{e.emailToCompare.split('').sort()}</div>
-                                        <div>Count Match:{e.countMatch}%</div>
-                                        <div>Position Match:{e.positionMatch}%</div>
-                                        <hr />
+                                        <div>Count Match:{e.countMatch}% | Position Match:{e.positionMatch}%</div>
                                     </div>)}
                                 </div>
                                 : <div>No duplicate email copy found!</div>)
