@@ -64,8 +64,9 @@ class EmployeeList extends Component {
 
     handleDuplicate(employees) {
         const set = new Set()
+        const attrName = "email_address"
         //"checkMatch" function from utils
-        employees.map(e => checkMatch(employees, e.email_address, set))
+        employees.map(e => checkMatch(employees, e[attrName], attrName, set))
         const finalMatch = [...set].filter(e => {
             if (e.countMatch !== 100) return e.countMatch >= 95;
 
@@ -92,12 +93,12 @@ class EmployeeList extends Component {
                         (fetching ?
                             (duplicate.length ?
                                 <div>{duplicate.map(e =>
-                                    <div key={e.email}>
+                                    <div key={e.string}>
                                         <hr />
-                                        <div>A.Email:{e.email}</div>
-                                        <div>B.Email To Compare:{e.emailToCompare}</div>
-                                        <div>A.List:{e.email.split('').sort()}</div>
-                                        <div>B.List:{e.emailToCompare.split('').sort()}</div>
+                                        <div>A.Email:{e.string}</div>
+                                        <div>B.Email To Compare:{e.stringToCompare}</div>
+                                        <div>A.List:{e.string.split('').sort()}</div>
+                                        <div>B.List:{e.stringToCompare.split('').sort()}</div>
                                         <div>Count Match:{e.countMatch}% | Position Match:{e.positionMatch}%</div>
                                     </div>)}
                                 </div>
