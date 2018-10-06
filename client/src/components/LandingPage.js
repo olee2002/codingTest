@@ -21,9 +21,9 @@ const FlexBox = styled.div`
 export const LandingPage = () => (
   <Page>
     <ConnectedNavBar />
-    <FlexBox>
-      {/* <Intro /> */}
-    </FlexBox>
+    {/* <FlexBox> */}
+    {/* <Intro /> */}
+    {/* </FlexBox> */}
     <EmployeeList />
   </Page>
 );

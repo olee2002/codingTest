@@ -87,7 +87,7 @@ class EmployeeList extends Component {
             })
         }
         const finalMatch = [...set].filter(e => {
-            if (e.countMatch !== 100) return e.countMatch > 95;
+            if (e.countMatch !== 100) return e.countMatch > 90;
 
         })
 
@@ -100,7 +100,6 @@ class EmployeeList extends Component {
 
         return (
             <Container>
-
                 <h1>SalesLoft Employee List</h1>
                 <div>
                     <button onClick={this.handleClick.bind(this)}>Email Letter Frequency</button>
