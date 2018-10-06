@@ -1,5 +1,5 @@
 class Employee < ApplicationRecord
-  validates_uniqueness_of :id
+  validates_uniqueness_of :email_address
 
   API_BASE_URL = "https://api.salesloft.com/v2"
   #control the number of data
