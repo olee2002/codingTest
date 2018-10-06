@@ -4,17 +4,26 @@ export function checkMatch(array, string, name, set) {
     array.map(e => {
         if (e != undefined && string != undefined) {
             const e1 = e[name].split('')
+            const e1r = [...e1].reverse()
             const e2 = string.split('')
-            let countMatch = 0
-            let positionMatch = 0
+            const e2r = [...e2].reverse()
+
+            let count = 0
+            let position = 0
+            let positionReverse = 0
+
+
             for (let i = 0; i < e1.length; i++) {
-                if (string.includes(e2[i])) countMatch++;
-                if (e1[i] === e2[i]) positionMatch++;
+                if (string.includes(e2[i])) count++;
+                if (e1[i] === e2[i]) position++;
+                if (e1r[i] === e2r[i]) positionReverse++;
             }
-            const percentageCount = Math.floor((countMatch / e1.length * 100), 100)
-            const percentagePosition = Math.floor((positionMatch / e1.length * 100), 100)
+
+            let positionSum = position + positionReverse
+            const percentageCount = Math.floor((count / e1.length * 100), 100)
+            const percentagePosition = Math.floor((positionSum / e1.length * 100), 100)
             set.add({
-                string: string,
+                string: e[name],
                 stringToCompare: string,
                 countMatch: percentageCount,
                 positionMatch: percentagePosition

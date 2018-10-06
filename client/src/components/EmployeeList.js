@@ -68,7 +68,7 @@ class EmployeeList extends Component {
         //"checkMatch" function from utils
         employees.map(e => checkMatch(employees, e[attrName], attrName, set))
         const finalMatch = [...set].filter(e => {
-            if (e.countMatch !== 100) return e.countMatch >= 95;
+            if (e.countMatch !== 100 && e.positionMatch !== 100) return e.countMatch >= 95 && e.positionMatch > 10;
 
         })
 
@@ -92,8 +92,8 @@ class EmployeeList extends Component {
                     <div>{duplicateClicked ?
                         (fetching ?
                             (duplicate.length ?
-                                <div>{duplicate.map(e =>
-                                    <div key={e.string}>
+                                <div>{duplicate.map((e, i) =>
+                                    <div key={i}>
                                         <hr />
                                         <div>A.Email:{e.string}</div>
                                         <div>B.Email To Compare:{e.stringToCompare}</div>

@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: "json"} do
     get :me, to: "me#me"
     get "/employees", to: "employees#index"
-    get "/employees/duplicates", to: "employees#find_duplicates"
   end
 
   root to: "main#index"

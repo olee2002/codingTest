@@ -3,10 +3,7 @@ class Api::EmployeesController < Api::BaseController
 
   def index
     @employee = Employee.all
-    render json: @employee
-  end
-
-  def find_duplicates
-    render json: "test"
+    response = @employee
+    render json: response
   end
 end
