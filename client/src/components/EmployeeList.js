@@ -90,7 +90,7 @@ class EmployeeList extends Component {
             if (e.countMatch !== 100) return e.countMatch > 95;
 
         })
-        console.log('test', finalMatch)
+
         this.setState({ duplicate: finalMatch, duplicateClicked: !this.state.duplicateClicked, fetching: true })
     }
 
