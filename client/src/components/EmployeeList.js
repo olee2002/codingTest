@@ -7,6 +7,7 @@ import { checkMatch, countLetters } from '../utils'
 
 import EmployeesTable from './EmployeesTable'
 import LetterFrequency from './LetterFrequency'
+import Duplicates from './PotentialDuplicate'
 
 const Container = styled.div`
 display: flex;
@@ -86,21 +87,11 @@ class EmployeeList extends Component {
                 <div>
                     <button onClick={this.handleClick.bind(this)}>{buttonLetters}</button>
                     <button onClick={() => this.handleDuplicate(employees)}>{buttonDuplicates}</button>
-                    <div>{duplicateButtonClicked ?
-                        (duplicate.length ?
-                            <div>{duplicate.map((e, i) =>
-                                <div key={i}>
-                                    <hr />
-                                    <div>A.Email:{e.string}</div>
-                                    <div>B.Email To Compare:{e.stringToCompare}</div>
-                                    <div>A.List:{e.string.split('').sort()}</div>
-                                    <div>B.List:{e.stringToCompare.split('').sort()}</div>
-                                    <div>Count Match:{e.countMatch}% | Position Match:{e.positionMatch}%</div>
-                                </div>)}
-                            </div>
-                            : <div>No duplicate email copy found!</div>)
-                        : null}
-                    </div>
+                    <Duplicates
+                        duplicate={duplicate}
+                        duplicateButtonClicked={duplicateButtonClicked}
+                    />
+
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={charsArr} /> : null}
