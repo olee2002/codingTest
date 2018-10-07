@@ -91,7 +91,6 @@ class EmployeeList extends Component {
                         duplicate={duplicate}
                         duplicateButtonClicked={duplicateButtonClicked}
                     />
-
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <EmployeesTable employees={employees} /> {clicked ? <LetterFrequency letterFrequency={charsArr} /> : null}
