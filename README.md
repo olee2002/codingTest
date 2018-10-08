@@ -37,11 +37,14 @@ npm install
 ```
 bundle exec rake db:create && bundle exec rake db:migrate
 ```
-6.) Copy the .env.sample to .env and fill out the values
+6.) In order to run on the localhost, created .env fill out the values below,
 ```
-cp .env.sample .env
+SALESLOFT_APPLICATION_ID=changeme
+SALESLOFT_APPLICATION_SECRET=changeme
+API_PORT=5000
+WEBPACK_PORT=5001
 ```
-7.) Add apikey to .env file. The title should match below,
+7.) Add the apikey to .env file to connect to the SalesLoft api. The title of the key should match below,
 ```
 SALESLOFT_API_KEY='yourapikey'
 ```
