@@ -41,8 +41,10 @@ bundle exec rake db:create && bundle exec rake db:migrate
 ```
 cp .env.sample .env
 ```
-7.) Add SALESLOFT_API_KEY='yourapikey' to .env file
-
+7.) Add apikey to .env file. The title should match below,
+```
+SALESLOFT_API_KEY='yourapikey'
+```
 8.) Start the development server
 ```
 bundle exec foreman start
